@@ -9,4 +9,10 @@
 		]]>
 	</insert>
 	
+	<select id="getBlog" parameterType="string" resultType="blogvo">
+		<![CDATA[ 
+			select id,title,logo from blog where id=#{id}
+		]]>
+	</select>
+	
 </mapper>

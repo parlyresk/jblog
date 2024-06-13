@@ -9,4 +9,16 @@
 		]]>
 	</insert>
 	
+	<select id="getCategoriesByBlogId" parameterType="string" resultType="categoryvo">
+		<![CDATA[ 
+			select no,name,description,reg_date as regDate,id from category where id=#{id}
+		]]>
+    </select>
+    
+    <select id="getCategory" parameterType="long" resultType="categoryvo">
+		<![CDATA[ 
+			select no,name,description,reg_date as regDate,id from category where no=#{categoryNo}
+		]]>
+    </select>
+	
 </mapper>

@@ -1,5 +1,7 @@
 package com.poscodx.jblog.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +19,16 @@ public class CategoryRepository {
 	public void insert(CategoryVo vo) {
 		
 		sqlSession.insert("category.insert", vo);
+	}
+
+	public List<CategoryVo> getCategoriesByBlogId(String id) {
+		
+		return sqlSession.selectList("category.getCategoriesByBlogId", id);
+	}
+
+	public CategoryVo getCategory(Long categoryNo) {
+		
+		return sqlSession.selectOne("category.getCategory", categoryNo);
 	}
 
 }
