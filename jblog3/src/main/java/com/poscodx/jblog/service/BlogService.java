@@ -83,4 +83,9 @@ public class BlogService {
 		return postRepository.getMaxPostNoByCategoryNo(categoryNo);
 	}
 
+	public void updateBlog(BlogVo blogVo) {
+		blogRepository.update(blogVo);
+		
+	}
+
 }

@@ -23,4 +23,9 @@ public class BlogRepository {
 		return sqlSession.selectOne("blog.getBlog", id);
 	}
 
+	public void update(BlogVo blogVo) {
+		sqlSession.update("blog.update", blogVo);
+		
+	}
+
 }

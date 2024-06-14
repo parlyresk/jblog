@@ -9,19 +9,25 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.poscodx.jblog.security.Auth;
 import com.poscodx.jblog.service.BlogService;
+import com.poscodx.jblog.service.FileUploadService;
 import com.poscodx.jblog.vo.BlogVo;
 import com.poscodx.jblog.vo.CategoryVo;
 import com.poscodx.jblog.vo.PostVo;
 
 //블로그 정보 가져와야 함,카테고리,포스트 포함
 @Controller
-@RequestMapping("/{id:(?!assets).*}")
+@RequestMapping("/{id:(?!assets|upload-images).*}")
 public class BlogController {
 	@Autowired
 	private BlogService blogService;
+	
+	@Autowired
+    private FileUploadService fileUploadService;
 
 	// url이 id/categoryNo/PostNo 순으로 와야함 optional 처리 해주기
 	@RequestMapping({ "", "/{categoryNo}", "/{categoryNo}/{postNo}" })
@@ -63,6 +69,25 @@ public class BlogController {
 
 		return "blog/admin-basic";
 	}
+	
+	@Auth
+    @RequestMapping(value = "/admin/basic/update", method = RequestMethod.POST)
+    public String update(@PathVariable("id") String id, @ModelAttribute BlogVo blogVo, @RequestParam("logoFile") MultipartFile file) {
+		if (file.isEmpty()) {
+            
+            BlogVo blog = blogService.getBlog(id);
+            blogVo.setLogo(blog.getLogo());
+        } else {
+            String logo = fileUploadService.restore(file);
+            if (logo != null) {
+                blogVo.setLogo(logo);
+            }
+        }
+        
+
+        blogService.updateBlog(blogVo);
+        return "redirect:/{id}/admin/basic";
+    }
 
 	@Auth
 	@RequestMapping(value = "/admin/category", method = RequestMethod.GET)
