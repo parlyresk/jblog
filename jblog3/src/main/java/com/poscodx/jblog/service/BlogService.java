@@ -48,4 +48,39 @@ public class BlogService {
 		return blogRepository.getBlog(id);
 	}
 
+	public List<CategoryVo> getCategoriesWithPostCountByBlogId(String id) {
+		
+		return categoryRepository.getCategoriesWithPostCountByBlogId(id);
+	}
+
+	public void addCategory(CategoryVo categoryVo) {
+		categoryRepository.insert(categoryVo);
+		
+	}
+
+	public void deleteCategory(Long no) {
+		
+		
+        postRepository.deleteByCategoryNo(no);
+        
+        
+        categoryRepository.delete(no);
+		
+	}
+
+	public void addPost(PostVo postVo) {
+		postRepository.insert(postVo);
+		
+	}
+
+	public Long getMaxCategoryNoByBlogId(String id) {
+		
+		return categoryRepository.getMaxCategoryNoByBlogId(id);
+	}
+
+	public Long getMaxPostNoByCategoryNo(Long categoryNo) {
+		
+		return postRepository.getMaxPostNoByCategoryNo(categoryNo);
+	}
+
 }

@@ -26,4 +26,19 @@ private SqlSession sqlSession;
 		return sqlSession.selectOne("post.getPost", postNo);
 	}
 
+	public void deleteByCategoryNo(Long no) {
+		sqlSession.delete("post.deleteByCategoryNo", no);
+		
+	}
+
+	public void insert(PostVo postVo) {
+		sqlSession.insert("post.insert", postVo);
+		
+	}
+
+	public Long getMaxPostNoByCategoryNo(Long categoryNo) {
+		
+		return sqlSession.selectOne("post.getMaxPostNoByCategoryNo", categoryNo);
+	}
+
 }

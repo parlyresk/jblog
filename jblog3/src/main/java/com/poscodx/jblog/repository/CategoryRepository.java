@@ -31,4 +31,19 @@ public class CategoryRepository {
 		return sqlSession.selectOne("category.getCategory", categoryNo);
 	}
 
+	public List<CategoryVo> getCategoriesWithPostCountByBlogId(String id) {
+		
+		return sqlSession.selectList("category.getCategoriesWithPostCountByBlogId", id);
+	}
+
+	public void delete(Long no) {
+		sqlSession.delete("category.delete",no);
+		
+	}
+
+	public Long getMaxCategoryNoByBlogId(String id) {
+		
+		return sqlSession.selectOne("category.getMaxCategoryNoByBlogId", id);
+	}
+
 }
