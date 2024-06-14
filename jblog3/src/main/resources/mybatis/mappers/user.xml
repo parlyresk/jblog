@@ -15,4 +15,12 @@
 		]]>
 	</select>
 	
+	<select id="findByID" parameterType="string" resultType="uservo">
+		<![CDATA[ 
+			select id,name,password,join_date
+			from user
+			where id=#{id}
+		]]>
+	</select>
+	
 </mapper>

@@ -36,7 +36,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         
      
         UserVo authUser = (UserVo) session.getAttribute("authUser");
-        String urlId = request.getRequestURI().split("/")[2]; 
+        String urlId = request.getRequestURI().split("/")[2]; // id 가져오기
 
         if (!authUser.getId().equals(urlId)) {
             response.sendRedirect(request.getContextPath() + "/user/login");

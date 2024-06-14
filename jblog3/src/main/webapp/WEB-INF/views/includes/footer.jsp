@@ -5,6 +5,6 @@
     pageEncoding="UTF-8"%>
 <div id="footer">
 			<p>
-				<strong>${blog.title}</strong> is powered by JBlog (c)2024
+				<a href="${pageContext.request.contextPath}/${blog.id}"><strong>${blog.title}</strong></a> is powered by JBlog (c)2024
 			</p>
 		</div>

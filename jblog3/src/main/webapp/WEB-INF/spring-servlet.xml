@@ -71,7 +71,6 @@
 
 
 	<!-- 6. MessageSource -->
-	<!--
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
@@ -81,7 +80,7 @@
 			</list>
 		</property>
 	</bean>
-	-->
+	
 
 	<!-- Multipart Resolver -->
 	<bean id="multipartResolver"

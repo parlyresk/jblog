@@ -30,4 +30,11 @@ public class UserRepository {
 		return sqlSession.selectOne("user.findByIDAndPassword",Map.of("id",id,"password",password));
 	}
 
+
+
+	public UserVo findByID(String id) {
+		
+		return sqlSession.selectOne("user.findByID",id);
+	}
+
 }
