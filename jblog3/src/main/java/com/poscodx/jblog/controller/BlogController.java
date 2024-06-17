@@ -1,6 +1,7 @@
 package com.poscodx.jblog.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,24 +33,22 @@ public class BlogController {
 	// url이 id/categoryNo/PostNo 순으로 와야함 optional 처리 해주기
 	@RequestMapping({ "", "/{categoryNo}", "/{categoryNo}/{postNo}" })
 	public String index(@PathVariable("id") String id,
-			@PathVariable(name = "categoryNo", required = false) Long categoryNo,
-			@PathVariable(name = "postNo", required = false) Long postNo, Model model) {
+			@PathVariable(name = "categoryNo", required = false) Optional<Long> categoryNo,
+			@PathVariable(name = "postNo", required = false) Optional<Long> postNo, Model model) {
+		
+		Long categoryNoValue = categoryNo.orElse(blogService.getMaxCategoryNoByBlogId(id));
+        Long postNoValue = postNo.orElse(blogService.getMaxPostNoByCategoryNo(categoryNoValue));
+		
 
-		if (categoryNo == null) {
-			categoryNo = blogService.getMaxCategoryNoByBlogId(id);
-		}
-
-		if (postNo == null && categoryNo != null) {
-			postNo = blogService.getMaxPostNoByCategoryNo(categoryNo);
-		}
+		
 		
 		BlogVo blog = blogService.getBlog(id);
 
 		List<CategoryVo> categories = blogService.getCategoriesByBlogId(id);
-		List<PostVo> posts = blogService.getPostsByCategoryNo(categoryNo);
+		List<PostVo> posts = blogService.getPostsByCategoryNo(categoryNoValue);
 
-		CategoryVo category = blogService.getCategory(categoryNo);
-		PostVo post = blogService.getPost(postNo);
+		CategoryVo category = blogService.getCategory(categoryNoValue);
+		PostVo post = blogService.getPost(postNoValue);
 
 		model.addAttribute("blog", blog);
 		model.addAttribute("categories", categories);

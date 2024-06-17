@@ -28,19 +28,19 @@ public class BlogService {
 		return categoryRepository.getCategoriesByBlogId(id);
 	}
 
-	public List<PostVo> getPostsByCategoryNo(Long categoryNo) {
+	public List<PostVo> getPostsByCategoryNo(Long categoryNoValue) {
 		
-		return postRepository.getPostsByCategoryNo(categoryNo);
+		return postRepository.getPostsByCategoryNo(categoryNoValue);
 	}
 
-	public CategoryVo getCategory(Long categoryNo) {
+	public CategoryVo getCategory(Long categoryNoValue) {
 		
-		return categoryRepository.getCategory(categoryNo);
+		return categoryRepository.getCategory(categoryNoValue);
 	}
 
-	public PostVo getPost(Long postNo) {
+	public PostVo getPost(Long postNoValue) {
 		
-		return postRepository.getPost(postNo);
+		return postRepository.getPost(postNoValue);
 	}
 
 	public BlogVo getBlog(String id) {
@@ -78,9 +78,9 @@ public class BlogService {
 		return categoryRepository.getMaxCategoryNoByBlogId(id);
 	}
 
-	public Long getMaxPostNoByCategoryNo(Long categoryNo) {
+	public Long getMaxPostNoByCategoryNo(Long categoryNoValue) {
 		
-		return postRepository.getMaxPostNoByCategoryNo(categoryNo);
+		return postRepository.getMaxPostNoByCategoryNo(categoryNoValue);
 	}
 
 	public void updateBlog(BlogVo blogVo) {

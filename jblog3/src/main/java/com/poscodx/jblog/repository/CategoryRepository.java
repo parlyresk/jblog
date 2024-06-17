@@ -26,9 +26,9 @@ public class CategoryRepository {
 		return sqlSession.selectList("category.getCategoriesByBlogId", id);
 	}
 
-	public CategoryVo getCategory(Long categoryNo) {
+	public CategoryVo getCategory(Long categoryNoValue) {
 		
-		return sqlSession.selectOne("category.getCategory", categoryNo);
+		return sqlSession.selectOne("category.getCategory", categoryNoValue);
 	}
 
 	public List<CategoryVo> getCategoriesWithPostCountByBlogId(String id) {

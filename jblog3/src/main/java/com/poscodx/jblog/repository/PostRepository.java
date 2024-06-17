@@ -16,14 +16,14 @@ private SqlSession sqlSession;
 		this.sqlSession = sqlSession;
 	}
 
-	public List<PostVo> getPostsByCategoryNo(Long categoryNo) {
+	public List<PostVo> getPostsByCategoryNo(Long categoryNoValue) {
 		
-		return sqlSession.selectList("post.getPostsByCategoryNo", categoryNo);
+		return sqlSession.selectList("post.getPostsByCategoryNo", categoryNoValue);
 	}
 
-	public PostVo getPost(Long postNo) {
+	public PostVo getPost(Long postNoValue) {
 		
-		return sqlSession.selectOne("post.getPost", postNo);
+		return sqlSession.selectOne("post.getPost", postNoValue);
 	}
 
 	public void deleteByCategoryNo(Long no) {
@@ -36,9 +36,9 @@ private SqlSession sqlSession;
 		
 	}
 
-	public Long getMaxPostNoByCategoryNo(Long categoryNo) {
+	public Long getMaxPostNoByCategoryNo(Long categoryNoValue) {
 		
-		return sqlSession.selectOne("post.getMaxPostNoByCategoryNo", categoryNo);
+		return sqlSession.selectOne("post.getMaxPostNoByCategoryNo", categoryNoValue);
 	}
 
 }
