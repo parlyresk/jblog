@@ -52,5 +52,15 @@ public class UserController {
 	public String login() {
 		return "user/login";
 	}
+	
+	@RequestMapping("/auth")
+	public void auth() {
+		
+	}
+	
+	@RequestMapping("/logout")
+	public void logout() {
+		
+	}
 
 }
