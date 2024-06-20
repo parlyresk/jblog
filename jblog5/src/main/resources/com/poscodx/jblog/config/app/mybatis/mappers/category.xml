@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+	
+	<insert id="insert" parameterType="categoryvo">
+		<![CDATA[ 
+			insert into category values(null,#{name }, 
+			#{description},current_date(),#{id })
+		]]>
+	</insert>
+	
+	<select id="getCategoriesByBlogId" parameterType="string" resultType="categoryvo">
+		<![CDATA[ 
+			select no,name,description,reg_date as regDate,id from category where id=#{id}
+		]]>
+    </select>
+    
+    <select id="getCategory" parameterType="long" resultType="categoryvo">
+		<![CDATA[ 
+			select no,name,description,reg_date as regDate,id from category where no=#{categoryNo}
+		]]>
+    </select>
+    
+    <select id="getCategoriesWithPostCountByBlogId" parameterType="string" resultType="categoryvo" >
+		<![CDATA[ 
+			select c.no as no, c.name as name, c.description as description, count(p.no) as postCount
+			from category c
+			left join post p on c.no=p.category_no
+			where c.id = #{id}
+			group by c.no 
+			order by c.no desc
+		]]>
+		
+	</select>
+	
+	<select id="getMaxCategoryNoByBlogId" parameterType="string" resultType="long">
+		<![CDATA[ 
+			select max(no) from category where id = #{id}
+		]]>
+		
+	</select>
+	
+	<delete id="delete" parameterType="long">
+		<![CDATA[ 
+			delete from category where no = #{no}
+		]]>
+	</delete>
+	
+</mapper>
