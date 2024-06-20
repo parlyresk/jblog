@@ -35,6 +35,9 @@ public class BlogController {
 	public String index(@PathVariable("id") String id,
 			@PathVariable(name = "categoryNo", required = false) Optional<Long> categoryNo,
 			@PathVariable(name = "postNo", required = false) Optional<Long> postNo, Model model) {
+		if(blogService.getBlog(id)==null) {
+			return "redirect:/";
+		}
 		
 		Long categoryNoValue = categoryNo.orElse(blogService.getMaxCategoryNoByBlogId(id));
         Long postNoValue = postNo.orElse(blogService.getMaxPostNoByCategoryNo(categoryNoValue));
