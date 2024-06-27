@@ -11,32 +11,33 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 import com.poscodx.jblog.config.AppConfig;
 import com.poscodx.jblog.config.WebConfig;
 
-public class JblogWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer{
-	@Override
-	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[]{AppConfig.class};
-	}
+public class JblogWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+    @Override
+    protected Class<?>[] getRootConfigClasses() {
+        return new Class<?>[] { AppConfig.class };
+    }
 
-	@Override
-	protected Class<?>[] getServletConfigClasses() {
-		return new Class<?>[]{WebConfig.class};
-	}
-	
-	@Override
-	protected Filter[] getServletFilters() {
-		return new Filter[] {new CharacterEncodingFilter("UTF-8")};
-	}
+    @Override
+    protected Class<?>[] getServletConfigClasses() {
+        return new Class<?>[] { WebConfig.class };
+    }
 
-	@Override
-	protected String[] getServletMappings() {
-		return new String[] {"/"};
-	}
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[] {
+            new CharacterEncodingFilter("UTF-8", true)
+        };
+    }
 
-	@Override
-	protected FrameworkServlet createDispatcherServlet(WebApplicationContext servletAppContext) {
-		DispatcherServlet servlet = (DispatcherServlet) super.createDispatcherServlet(servletAppContext);
-		servlet.setThrowExceptionIfNoHandlerFound(true);
-		
-		return servlet;
-	}
+    @Override
+    protected String[] getServletMappings() {
+        return new String[] { "/" };
+    }
+
+    @Override
+    protected FrameworkServlet createDispatcherServlet(WebApplicationContext servletAppContext) {
+        DispatcherServlet servlet = (DispatcherServlet) super.createDispatcherServlet(servletAppContext);
+        servlet.setThrowExceptionIfNoHandlerFound(true);
+        return servlet;
+    }
 }
