@@ -1,27 +1,42 @@
-package com.poscodx.jblog.config.web;
+package com.poscodx.jblog.config;
 
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-@Configuration
-@EnableWebMvc
+@SpringBootConfiguration
 public class MvcConfig implements WebMvcConfigurer {
+	@Autowired
+	private Environment env;
+	
+	
+	// Locale Resolver
+		@Bean
+		public LocaleResolver localeResolver() {
+			CookieLocaleResolver localeResolver = new CookieLocaleResolver();
+			localeResolver.setCookieName("lang");
+			localeResolver.setCookieHttpOnly(false);
+
+			return localeResolver;
+		}
 
     // View Resolver
     @Bean
@@ -49,6 +64,8 @@ public class MvcConfig implements WebMvcConfigurer {
         messageConverter.setSupportedMediaTypes(Arrays.asList(new MediaType("application", "json", Charset.forName("utf-8"))));
         return messageConverter;
     }
+    
+ 
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -56,11 +73,15 @@ public class MvcConfig implements WebMvcConfigurer {
         converters.add(mappingJackson2HttpMessageConverter());
     }
 
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    @Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry
-			.addResourceHandler("/assets/**")
-			.addResourceLocations("classpath:assets/");
+		.addResourceHandler(env.getProperty("fileupload.resourceUrl")+"/**")
+		.addResourceLocations("file:"+env.getProperty("fileupload.uploadLocation") + "/");
+		
+		registry
+		.addResourceHandler("/assets/**")
+		.addResourceLocations("classpath:assets/");
 	}
-
    
 }
