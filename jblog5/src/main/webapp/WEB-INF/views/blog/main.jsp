@@ -43,7 +43,7 @@
 			<div class="blog-logo">
 				<!-- blog.logo -->
 				<!-- <img src="${pageContext.request.contextPath}/${blog.logo}"> -->
-				<img src="${pageContext.request.contextPath}/${blog.logo}">
+				<img src="${pageContext.request.contextPath}${blog.logo}">
 			</div>
 		</div>
 
